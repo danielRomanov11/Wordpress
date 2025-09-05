@@ -1,57 +1,56 @@
-﻿using Library.Wordpress.Models;
-namespace CLI.Wordpress
+﻿using Library.WordPress.Models;
+using System;
+
+namespace CLI.WordPress
 {
     public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Wordpress!");
-            List<Blog?> blogposts = new List<string?>();
-            
+            Console.WriteLine("Welcome to WordPress!");
+            List<Blog?> blogPosts = new List<Blog?>();
+            bool cont = true;
             do
             {
-                Console.WriteLine("C. Create a Blogpost");
-                Console.WriteLine("R. List all Blogposts");
-                Console.WriteLine("U. Update a Blogpost");
-                Console.WriteLine("D. Delete a Blogpost");
-                Console.WriteLine("Q. Exit");
+                Console.WriteLine("C. Create a Blog Post");
+                Console.WriteLine("R. List all Blog Posts");
+                Console.WriteLine("U. Update a Blog Post");
+                Console.WriteLine("D. Delete a Blog Post");
+                Console.WriteLine("Q. Quit");
 
                 var userChoice = Console.ReadLine();
-
                 switch (userChoice)
                 {
                     case "C":
                     case "c":
                         var blog = new Blog();
-                        blogposts.Add(Console.ReadLine() ?? string.Empty);
+                        blog.Title = Console.ReadLine();
+                        blog.Content = Console.ReadLine();
+                        blogPosts.Add(blog);
                         break;
-                    case "R":
+                    case "R": 
                     case "r":
-                        foreach(var b in blogposts){
-                            //question mark makes dot ops null
-                            Console.WriteLine($"({b?.Length}) {b}");
+                        foreach(var b in blogPosts)
+                        {
+                            Console.WriteLine(b);
                         }
-                        
                         break;
-                    case "U":
+                    case "U": 
                     case "u":
-
                         break;
-                    case "D":
+                    case "D": 
                     case "d":
-
                         break;
+                    case "Q": 
                     case "q":
-                    case "Q":
-
+                        cont = false;
                         break;
-                    default: 
-                        Console.WriteLine("Invalid choice. Please try again.");
+                    default:
+                        Console.WriteLine("Invalid command");
                         break;
-
                 }
 
-            } while (true);
+            } while (cont);
         }
     }
 }
