@@ -33,7 +33,7 @@ namespace CLI.WordPress
 
                         }
                         else {
-                            maxId = -1;
+                            maxId = 0;
                         }
                             blog.Id = ++maxId;
                         blogPosts.Add(blog);
@@ -50,6 +50,25 @@ namespace CLI.WordPress
                         break;
                     case "D": 
                     case "d":
+                        //display blogs
+                        blogPosts.ForEach(Console.WriteLine);
+                        Console.WriteLine("Blog to Delete (Id):");
+
+                        //get selection
+                        var selection = Console.ReadLine();
+                        //selection is int
+                        if (int.TryParse(selection ?? "0", out int intSelection))
+                        {
+                              
+                            //deletion
+                            var blogToDelete = blogPosts
+                                //dont consider nulls
+                                .Where(b => b != null)
+                                //find by id
+                                .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                            //rmove from list
+                            blogPosts.Remove(blogToDelete);
+                        }
                         break;
                     case "Q": 
                     case "q":
