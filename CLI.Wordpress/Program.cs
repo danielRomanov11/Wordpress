@@ -47,29 +47,55 @@ namespace CLI.WordPress
                         break;
                     case "U": 
                     case "u":
-                        break;
+                        {
+                            blogPosts.ForEach(Console.WriteLine);
+                            Console.WriteLine("Blog to Update (Id):");
+
+                            //get selection
+                            var selection = Console.ReadLine();
+                            //selection is int
+                            if (int.TryParse(selection ?? "0", out int intSelection))
+                            {
+
+                                //get object to update
+                                var blogToUpdate = blogPosts
+                                    //dont consider nulls
+                                    .Where(b => b != null)
+                                    //find by id
+                                    .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                                //update from list
+                                if (blogToUpdate != null)
+                                {
+                                    blogToUpdate.Title = Console.ReadLine();
+                                    blogToUpdate.Content = Console.ReadLine();
+                                }
+                            }
+                                break;         
+                        }
                     case "D": 
                     case "d":
-                        //display blogs
-                        blogPosts.ForEach(Console.WriteLine);
-                        Console.WriteLine("Blog to Delete (Id):");
-
-                        //get selection
-                        var selection = Console.ReadLine();
-                        //selection is int
-                        if (int.TryParse(selection ?? "0", out int intSelection))
                         {
-                              
-                            //deletion
-                            var blogToDelete = blogPosts
-                                //dont consider nulls
-                                .Where(b => b != null)
-                                //find by id
-                                .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
-                            //rmove from list
-                            blogPosts.Remove(blogToDelete);
+                            //display blogs
+                            blogPosts.ForEach(Console.WriteLine);
+                            Console.WriteLine("Blog to Delete (Id):");
+
+                            //get selection
+                            var selection = Console.ReadLine();
+                            //selection is int
+                            if (int.TryParse(selection ?? "0", out int intSelection))
+                            {
+
+                                //deletion
+                                var blogToDelete = blogPosts
+                                    //dont consider nulls
+                                    .Where(b => b != null)
+                                    //find by id
+                                    .FirstOrDefault(b => (b?.Id ?? -1) == intSelection);
+                                //rmove from list
+                                blogPosts.Remove(blogToDelete);
+                            }
+                            break;
                         }
-                        break;
                     case "Q": 
                     case "q":
                         cont = false;
